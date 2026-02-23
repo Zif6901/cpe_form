@@ -296,8 +296,9 @@
         border-color: #d89a9a !important;
     }
     .readonly-input {
-        background-color: #eee;
-        color: #777;
+        background-color: #eee !important;
+        color: #777 !important;
+        cursor: not-allowed;
     }
     
     /* Specific composite fields */
@@ -481,21 +482,21 @@
                 <div class="form-group">
                     <label>Opportunity ID</label>
                     <div class="input-wrapper">
-                        <input type="text" value="O-3928292">
+                        <input type="text" value="O-3928292" class="readonly-input" readonly>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label>NASP</label>
                     <div class="input-wrapper">
-                        <input type="text" value="19HNYR">
+                        <input type="text" value="19HNYR" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Segment</label>
                     <div class="input-wrapper">
-                        <input type="text" value="US">
+                        <input type="text" value="US" class="readonly-input" readonly>
                     </div>
                 </div>
 
@@ -513,14 +514,14 @@
                 <div class="form-group">
                     <label>Customer Name</label>
                     <div class="input-wrapper">
-                        <input type="text" value="SPRINKLE DOODLES">
+                        <input type="text" value="SPRINKLE DOODLES" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Request Details</label>
                     <div class="input-wrapper">
-                        <textarea class="textarea-large">Bosch opportunity needs some analysis based on tax feedback
+                        <textarea class="textarea-large readonly-input" readonly>Bosch opportunity needs some analysis based on tax feedback
 Bosch is looking for Cisco managed routers (MWAN) on MPLS network with Central Germany MRP
 
 Attached is the fille “Bosch - Criteria for assessment” word document</textarea>
@@ -530,21 +531,21 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                 <div class="form-group">
                     <label>Intake Analysis</label>
                     <div class="input-wrapper">
-                        <textarea class="textarea-large">The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category. It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
+                        <textarea class="textarea-large readonly-input" readonly>The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category. It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label>Date Engaged</label>
                     <div class="input-wrapper">
-                        <input type="text" value="2026-02-06">
+                        <input type="text" value="2026-02-06" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Requested Due Date</label>
                     <div class="input-wrapper multi-field">
-                        <input type="text" value="2026-03-13" style="width: 50%;">
+                        <input type="text" value="2026-03-13" class="readonly-input" readonly style="width: 50%;">
                         <span class="inline-label">Days Remaining</span>
                         <input type="text" value="19" style="width: 20%; text-align: center;">
                     </div>
@@ -625,28 +626,28 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                 <div class="form-group">
                     <label>Master Customer<br>Contracting Country</label>
                     <div class="input-wrapper">
-                        <input type="text" value="US">
+                        <input type="text" value="US" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Account Manager</label>
                     <div class="input-wrapper">
-                        <input type="text" value="Smith, John">
+                        <input type="text" value="Smith, John" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Solutions Architect (SA)</label>
                     <div class="input-wrapper">
-                        <input type="text" value="Jones, Mary">
+                        <input type="text" value="Jones, Mary" class="readonly-input" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Requested By</label>
                     <div class="input-wrapper" style="display: flex;">
-                        <input type="text" value="Arnold, Stephen K">
+                        <input type="text" value="Arnold, Stephen K" class="readonly-input" readonly style="flex-grow: 1;">
                         <button class="info-btn">i</button>
                     </div>
                 </div>
@@ -715,6 +716,9 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                             <option>-- None --</option>
                             <option>Purchase</option>
                             <option>Monthly Recurring Plan (MRP)</option>
+                            <option>Customer Provided</option>
+                            <option>Customer Furnished Equipment</option>
+                            <option>Direct Lease</option>
                         </select>
                     </div>
                 </div>

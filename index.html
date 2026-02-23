@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updated Form Replication - Activity Log & Chat</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        font-size: 13px;
+    }
+    .form-container {
+        background-color: #fafafa;
+        border: 1px solid #e0e0e0;
+        max-width: 1000px;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        padding-bottom: 20px; 
+    }
+    
+    /* Header Styles */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid #ddd;
+        background-color: #f8f8f8;
+    }
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .menu-icon {
+        color: #a30000;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .title-block {
+        display: flex;
+        flex-direction: column;
+    }
+    .title-main {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .title-sub {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .title-sub span {
+        font-weight: normal;
+        color: #555;
+    }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .header-icons span {
+        color: #a30000;
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    
+    /* Buttons */
+    .btn {
+        background-color: #fff;
+        border: 1px solid #a30000;
+        color: #a30000;
+        padding: 6px 16px;
+        border-radius: 3px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .btn:hover {
+        background-color: #fdf5f5;
+    }
+
+    /* ALICE Button */
+    .btn-alice {
+        background-color: #a30000;
+        border: 1px solid #a30000;
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 3px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .btn-alice:hover {
+        background-color: #8a0000;
+    }
+
+    /* Message & Engage Buttons */
+    .btn-message, .btn-engage {
+        background-color: #ffffff;
+        border: 1px solid #a30000;
+        color: #a30000;
+        padding: 6px 16px;
+        border-radius: 3px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .btn-message:hover, .btn-engage:hover {
+        background-color: #fdf5f5;
+    }
+
+    /* Dropdown Menu Styles */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #ffffff;
+        min-width: 340px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+        z-index: 2500;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .header .dropdown-content {
+        top: 100%;
+        margin-top: 5px;
+    }
+    .footer .dropdown-content {
+        bottom: 100%;
+        margin-bottom: 5px;
+    }
+    .dropdown-item {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+    }
+    .dropdown-item:hover {
+        background-color: #f1f1f1;
+        color: #a30000;
+    }
+    .dropdown-item:last-child {
+        border-bottom: none;
+    }
+    
+    /* Disabled item styling */
+    .disabled-item {
+        color: #a0a0a0;
+        cursor: not-allowed;
+        background-color: #f9f9f9;
+    }
+    .disabled-item:hover {
+        background-color: #f9f9f9;
+        color: #a0a0a0;
+    }
+
+    /* Form Body Styles - Updated for spanning rows */
+    .form-body {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+    .form-columns {
+        display: flex;
+        gap: 40px;
+    }
+    .column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    /* Form Rows */
+    .form-group {
+        display: flex;
+        align-items: flex-start;
+    }
+    .form-group label {
+        width: 35%;
+        text-align: right;
+        padding-right: 15px;
+        padding-top: 6px;
+        color: #444;
+        line-height: 1.2;
+    }
+    
+    /* Multi-field row (for placing two inputs on the same line) */
+    .multi-field {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .inline-label {
+        color: #444;
+        white-space: nowrap;
+        font-size: 13px;
+    }
+
+    /* Full Width Row Styling */
+    .form-group-full {
+        display: flex;
+        align-items: flex-start;
+    }
+    .form-group-full label {
+        /* Aligns perfectly with the 35% labels of the 50% left column */
+        width: calc(17.5% - 7px);
+        text-align: right;
+        padding-right: 15px;
+        padding-top: 6px;
+        color: #444;
+        line-height: 1.2;
+    }
+    .form-group-full .input-wrapper {
+        width: calc(82.5% + 7px);
+        position: relative;
+        display: flex;
+    }
+
+    .input-wrapper {
+        width: 65%;
+        position: relative;
+        display: flex;
+    }
+    
+    /* Inputs */
+    input[type="text"], select, textarea {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 13px;
+        color: #333;
+    }
+    textarea {
+        resize: vertical; 
+        height: 60px;
+    }
+    .textarea-large {
+        height: 100px;
+    }
+    select {
+        cursor: pointer;
+    }
+    
+    /* Input variants */
+    .input-with-icon {
+        display: flex;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        overflow: hidden;
+        background: #fff;
+        width: 100%;
+    }
+    .input-with-icon input {
+        border: none;
+        border-radius: 0;
+        flex-grow: 1;
+        outline: none;
+    }
+    .icon-btn {
+        background: transparent;
+        border: none;
+        border-left: 1px solid #ccc;
+        padding: 0 8px;
+        color: #a30000;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+    .required-input {
+        background-color: #fbecec !important;
+        border-color: #d89a9a !important;
+    }
+    .readonly-input {
+        background-color: #eee;
+        color: #777;
+    }
+    
+    /* Specific composite fields */
+    .info-btn {
+        margin-left: 8px;
+        background: #fff;
+        border: 1px solid #a30000;
+        color: #a30000;
+        border-radius: 3px;
+        padding: 0 8px;
+        cursor: pointer;
+        font-family: serif;
+        font-style: italic;
+        font-weight: bold;
+    }
+    .value-group {
+        display: flex;
+        gap: 0;
+        width: 100%;
+    }
+    .value-group select {
+        width: 60px;
+        border-radius: 3px 0 0 3px;
+        border-right: none;
+    }
+    .value-group input {
+        border-radius: 0 3px 3px 0;
+        text-align: right;
+    }
+    
+    /* Footer */
+    .footer {
+        padding: 0 20px 20px 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* Floating Chat Window */
+    .chat-window {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 320px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+    }
+    .chat-header {
+        background-color: #a30000;
+        color: #fff;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+    }
+    .close-chat {
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .chat-body {
+        height: 250px;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .chat-message-system {
+        color: #666;
+        font-style: italic;
+        font-size: 11px;
+        text-align: center;
+        margin: 0;
+    }
+    .chat-footer {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+    }
+    .chat-footer input {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px 0 0 3px;
+        outline: none;
+        font-size: 12px;
+    }
+    .chat-footer button {
+        background-color: #a30000;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 0 3px 3px 0;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* ALICE Image Widget Popup */
+    .alice-popup-container {
+        display: none; 
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 2000;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        border-radius: 12px;
+        background: #fff;
+        width: 380px; 
+        overflow: hidden;
+    }
+    .alice-popup-container img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .alice-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="header">
+        <div class="header-left">
+            <div class="menu-icon">&#9776;</div>
+            <div class="title-block">
+                <div class="title-main">1@TTI CPE Engagements</div>
+                <div class="title-sub">New record <span>View: Default view*</span></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-icons">
+                <span>&#128206;</span> 
+                <span>&#9881;</span>  
+                <span>&bull;&bull;&bull;</span> 
+            </div>
+            <button class="btn-alice" onclick="toggleAlicePopup()">ALICE</button>
+            <button class="btn-message" onclick="toggleChat()">Message</button>
+
+            <div class="dropdown">
+                <button class="btn-engage" onclick="toggleEngageMenu('engageMenuHeader', event)">Engage</button>
+                <div id="engageMenuHeader" class="dropdown-content">
+                    <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
+                    <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Center of Excellence (COE)</label>
+                    <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
+                    <label class="dropdown-item disabled-item"><input type="checkbox" disabled> Deal Assurance: CPE Services</label>
+                    <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
+                    <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Implementation Assurance (IA)</label>
+                    <label class="dropdown-item"><input type="checkbox"> Tech Ops: Global Integrated Architect (GIA)</label>
+                    <label class="dropdown-item"><input type="checkbox"> Tech Ops &amp; Architecture: OPD / SDA</label>
+                    <label class="dropdown-item"><input type="checkbox"> Tech Ops: Integrated Contract Management (ICM)</label>
+                </div>
+            </div>
+
+            <button class="btn">Submit</button>
+            <button class="btn">Save</button>
+        </div>
+    </div>
+
+    <div class="form-body">
+        
+        <div class="form-columns">
+            <div class="column">
+                <div class="form-group">
+                    <label>Opportunity ID</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="O-3928292">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>NASP</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="19HNYR">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Segment</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="US">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>RFP/RFI</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option selected>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="SPRINKLE DOODLES">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Request Details</label>
+                    <div class="input-wrapper">
+                        <textarea class="textarea-large">Bosch opportunity needs some analysis based on tax feedback
+Bosch is looking for Cisco managed routers (MWAN) on MPLS network with Central Germany MRP
+
+Attached is the fille “Bosch - Criteria for assessment” word document</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Intake Analysis</label>
+                    <div class="input-wrapper">
+                        <textarea class="textarea-large">The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category. It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date Engaged</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="2026-02-06">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Requested Due Date</label>
+                    <div class="input-wrapper multi-field">
+                        <input type="text" value="2026-03-13" style="width: 50%;">
+                        <span class="inline-label">Days Remaining</span>
+                        <input type="text" value="19" style="width: 20%; text-align: center;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Date Completed</label>
+                    <div class="input-wrapper">
+                        <div class="input-with-icon">
+                            <input type="text">
+                            <button class="icon-btn">&#128197;</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Close Notes</label>
+                    <div class="input-wrapper">
+                        <textarea></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tax Approval</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="CLE/VLE availability">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Regulatory Approval</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="CLE/VLE availability">
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <label>Request Category</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>BAU</option>
+                            <option selected>Custom</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Request Type</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>GID 04</option>
+                            <option>GID 16</option>
+                            <option>Vendor Management Engagement</option>
+                            <option>CLE/VLE Setup (COTS)</option>
+                            <option>Validate CPE Availability</option>
+                            <option>Non-Standard MRP</option>
+                            <option>Quoting Training</option>
+                            <option selected>Assessment</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>DLM Nominated</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option selected>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Master Customer<br>Contracting Country</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="US">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Account Manager</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="Smith, John">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Solutions Architect (SA)</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="Jones, Mary">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Requested By</label>
+                    <div class="input-wrapper" style="display: flex;">
+                        <input type="text" value="Arnold, Stephen K">
+                        <button class="info-btn">i</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Assigned To</label>
+                    <div class="input-wrapper">
+                        <div class="input-with-icon required-input">
+                            <input type="text" class="required-input">
+                            <button class="icon-btn">&#128269;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>New</option>
+                            <option>Under Review</option>
+                            <option>Pending Assignment</option>
+                            <option>On Hold</option>
+                            <option>Working</option>
+                            <option>Closed - Complete</option>
+                            <option>Closed - Incomplete</option>
+                            <option>Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Value $$</label>
+                    <div class="input-wrapper">
+                        <div class="value-group">
+                            <select>
+                                <option>$</option>
+                            </select>
+                            <input type="text" value="0.00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>TCV $$</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="$100,000.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Invoicing Model</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Local to Local (L2L)</option>
+                            <option>Non Local to Local (NL2L)</option>
+                            <option>Central</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Billing Method</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Purchase</option>
+                            <option>Monthly Recurring Plan (MRP)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Attachment Information</label>
+                    <div class="input-wrapper">
+                        <textarea></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ProQuest Quote IDs</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="215384443-0, 0216998745-1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group-full">
+            <label>Activity Log</label>
+            <div class="input-wrapper">
+                <textarea class="textarea-large">2026-02-06 10:05 AM ET:  CPE Team Engaged
+2026-02-06 11:15 AM ET:  Arnold, Stephen assigned to task</textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer" style="max-width: 1000px; margin: 0 auto; padding-top: 10px;">
+    <button class="btn-alice" onclick="toggleAlicePopup()">ALICE</button>
+    <button class="btn-message" onclick="toggleChat()">Message</button>
+
+    <div class="dropdown">
+        <button class="btn-engage" onclick="toggleEngageMenu('engageMenuFooter', event)">Engage</button>
+        <div id="engageMenuFooter" class="dropdown-content">
+            <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
+            <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Center of Excellence (COE)</label>
+            <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
+            <label class="dropdown-item disabled-item"><input type="checkbox" disabled> Deal Assurance: CPE Services</label>
+            <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
+            <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Implementation Assurance (IA)</label>
+            <label class="dropdown-item"><input type="checkbox"> Tech Ops: Global Integrated Architect (GIA)</label>
+            <label class="dropdown-item"><input type="checkbox"> Tech Ops &amp; Architecture: OPD / SDA</label>
+            <label class="dropdown-item"><input type="checkbox"> Tech Ops: Integrated Contract Management (ICM)</label>
+        </div>
+    </div>
+
+    <button class="btn">Submit</button>
+    <button class="btn">Save</button>
+</div>
+
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <span>Messaging</span>
+        <span class="close-chat" onclick="toggleChat()">&#10005;</span>
+    </div>
+    <div class="chat-body">
+        <p class="chat-message-system">Start of conversation...</p>
+    </div>
+    <div class="chat-footer">
+        <input type="text" placeholder="Type a message...">
+        <button>Send</button>
+    </div>
+</div>
+
+<div id="alicePopup" class="alice-popup-container">
+    <button class="alice-close-btn" onclick="toggleAlicePopup()" title="Close ALICE"></button>
+    <img src="Screenshot 2026-02-23 074352.png" alt="ALICE-Voice-v3 Interface">
+</div>
+
+<script>
+    function closeAllPopups() {
+        document.getElementById("chatWindow").style.display = "none";
+        document.getElementById("alicePopup").style.display = "none";
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].style.display = "none";
+        }
+    }
+
+    function toggleChat() {
+        var chatWindow = document.getElementById("chatWindow");
+        var isHidden = (chatWindow.style.display === "none" || chatWindow.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            chatWindow.style.display = "flex";
+        }
+    }
+
+    function toggleAlicePopup() {
+        var popup = document.getElementById("alicePopup");
+        var isHidden = (popup.style.display === "none" || popup.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            popup.style.display = "block";
+        }
+    }
+
+    function toggleEngageMenu(menuId, event) {
+        event.stopPropagation(); // Stop click from bubbling up and closing immediately
+        var menu = document.getElementById(menuId);
+        var isHidden = (menu.style.display === "none" || menu.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            menu.style.display = "block";
+        }
+    }
+
+    // Close dropdowns if the user clicks anywhere outside the menu or engage button
+    window.onclick = function(event) {
+        if (!event.target.matches('.btn-engage') && !event.target.closest('.dropdown-content')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

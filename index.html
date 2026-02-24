@@ -180,8 +180,12 @@
         display: flex;
         gap: 40px;
     }
+    
+    /* FORCED EQUAL COLUMNS */
     .column {
         flex: 1;
+        width: 50%;
+        min-width: 0; /* Crucial: stops long dropdown text from pushing columns past 50% */
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -240,7 +244,7 @@
     }
     
     /* Inputs */
-    input[type="text"], select, textarea {
+    input[type="text"], select, textarea, .rich-text-box {
         width: 100%;
         padding: 6px 8px;
         border: 1px solid #ccc;
@@ -262,6 +266,20 @@
     }
     select {
         cursor: pointer;
+    }
+
+    /* Rich Text Box for Hyperlinks */
+    .rich-text-box {
+        background-color: #fff;
+        overflow-y: auto;
+        line-height: 1.5;
+    }
+    .rich-text-box a {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+    .rich-text-box a:hover {
+        color: #a30000;
     }
     
     /* Input variants */
@@ -494,6 +512,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Contract ID</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="None">
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Segment</label>
                     <div class="input-wrapper">
                         <input type="text" value="US" class="readonly-input" readonly>
@@ -547,7 +572,7 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                     <div class="input-wrapper multi-field">
                         <input type="text" value="2026-03-13" class="readonly-input" readonly style="width: 50%;">
                         <span class="inline-label">Days Remaining</span>
-                        <input type="text" value="19" style="width: 20%; text-align: center;">
+                        <input type="text" value="19" class="readonly-input" readonly style="width: 20%; text-align: center;">
                     </div>
                 </div>
 
@@ -571,14 +596,70 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                 <div class="form-group">
                     <label>Tax Approval</label>
                     <div class="input-wrapper">
-                        <input type="text" value="CLE/VLE availability">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Regulatory Approval</label>
                     <div class="input-wrapper">
-                        <input type="text" value="CLE/VLE availability">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>VZ Sourcing Approval</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>MRP Aggregator</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Value $$</label>
+                    <div class="input-wrapper">
+                        <div class="value-group">
+                            <select>
+                                <option>$</option>
+                            </select>
+                            <input type="text" value="0.00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>TCV $$</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="$100,000.00">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Master Customer<br>Contracting Country</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="US" class="readonly-input" readonly>
                     </div>
                 </div>
             </div>
@@ -613,6 +694,38 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                 </div>
 
                 <div class="form-group">
+                    <label>Quoting Support</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Help With Error Message</option>
+                            <option>Help With Affected Site(s) if multiple Sites are quoted</option>
+                            <option>Help With Affected Service ID if most CPE is priced successfully</option>
+                            <option>Help With Template ID if applicable</option>
+                            <option>Help With Vendor Quote if applicable</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Quoting Training &amp; Troubleshooting Support</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Help with Same as above, plus training assistant</option>
+                            <option>Help with PQ ID</option>
+                            <option>Help with</option>
+                            <option>Help with CLE/VLE</option>
+                            <option>Help with Error Message</option>
+                            <option>Help with Affected Site if multiple Sites are quoted</option>
+                            <option>Help with Affected Service ID if most CPE is price successfully</option>
+                            <option>Help with Template ID if applicable</option>
+                            <option>Help with Vendor Quote if applicable</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>DLM Nominated</label>
                     <div class="input-wrapper">
                         <select>
@@ -620,13 +733,6 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                             <option>Yes</option>
                             <option selected>No</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Master Customer<br>Contracting Country</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="US" class="readonly-input" readonly>
                     </div>
                 </div>
 
@@ -641,6 +747,31 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                     <label>Solutions Architect (SA)</label>
                     <div class="input-wrapper">
                         <input type="text" value="Jones, Mary" class="readonly-input" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>TechOps POC</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="Miller, Sam">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>PCM Needed</label>
+                    <div class="input-wrapper">
+                        <select>
+                            <option>-- None --</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>PCM POC</label>
+                    <div class="input-wrapper">
+                        <input type="text" value="Zunaid Sheikh">
                     </div>
                 </div>
 
@@ -677,23 +808,30 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label>Value $$</label>
+                    <label>Attachment Information</label>
                     <div class="input-wrapper">
-                        <div class="value-group">
-                            <select>
-                                <option>$</option>
-                            </select>
-                            <input type="text" value="0.00">
+                        <div class="rich-text-box textarea-xlarge">
+                            <strong>File Name:</strong> AYS Ticket Assignment Process<br>
+                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link</a><br>
+                            <strong>Summary:</strong> This document outlines the step-by-step workflow for managing AYS tickets, including notification, information gathering, routing determination, and assignment execution.<br><br>
+
+                            <strong>File Name:</strong> AYS Ticket Assignment Screenshot<br>
+                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link</a><br>
+                            <strong>Summary:</strong> This screenshot displays an active AYS system incident ticket (INC016284342) where a user is requesting Tier 2 support to activate a specific CPE template so they can complete a quote.<br><br>
+
+                            <strong>File Name:</strong> CPE INTAKE Requirements (Short Version)<br>
+                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link</a><br>
+                            <strong>Summary:</strong> This document details the mission, supported partnerships, and service offerings of the CPE Support Team, while outlining a goal to transition from a fragmented intake process to a streamlined, single-channel model.
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>TCV $$</label>
+                    <label>ProQuest Quote IDs</label>
                     <div class="input-wrapper">
-                        <input type="text" value="$100,000.00">
+                        <input type="text" value="215384443-0, 0216998745-1">
                     </div>
                 </div>
 
@@ -723,29 +861,6 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Attachment Information</label>
-                    <div class="input-wrapper">
-                        <textarea class="textarea-xlarge">File Name: AYS Ticket Assignment Process
-URL: https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link
-Summary: This document outlines the step-by-step workflow for managing AYS tickets, including notification, information gathering, routing determination, and assignment execution.
-
-File Name: AYS Ticket Assignment Screenshot
-URL: https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link
-Summary: This screenshot displays an active AYS system incident ticket (INC016284342) where a user is requesting Tier 2 support to activate a specific CPE template so they can complete a quote.
-
-File Name: CPE INTAKE Requirements (Short Version)
-URL: https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link
-Summary: This document details the mission, supported partnerships, and service offerings of the CPE Support Team, while outlining a goal to transition from a fragmented intake process to a streamlined, single-channel model.</textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>ProQuest Quote IDs</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="215384443-0, 0216998745-1">
-                    </div>
-                </div>
             </div>
         </div>
 

@@ -124,12 +124,13 @@
         position: absolute;
         right: 0;
         background-color: #ffffff;
-        min-width: 340px;
+        min-width: 360px;
         box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
         z-index: 2500;
         border: 1px solid #ccc;
         border-radius: 4px;
-        overflow: hidden;
+        overflow-y: auto;
+        max-height: 500px;
     }
     .header .dropdown-content {
         top: 100%;
@@ -157,6 +158,26 @@
     .dropdown-item:last-child {
         border-bottom: none;
     }
+
+    /* Nested Sub-options for Engage Menu */
+    .sub-options {
+        background-color: #fafafa;
+        border-bottom: 1px solid #eee;
+    }
+    .dropdown-sub-item {
+        padding: 8px 16px 8px 40px; 
+        cursor: pointer;
+        color: #555;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+    }
+    .dropdown-sub-item:hover {
+        background-color: #f1f1f1;
+        color: #a30000;
+    }
     
     /* Disabled item styling */
     .disabled-item {
@@ -169,19 +190,62 @@
         color: #a0a0a0;
     }
 
-    /* Form Body Styles - Updated for spanning rows */
+    /* Form Body Styles */
     .form-body {
         display: flex;
         flex-direction: column;
         padding: 20px;
-        gap: 20px;
+        gap: 15px;
     }
+    
+    /* Collapsible Sections */
+    .collapsible-section {
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .collapsible-header {
+        background-color: #fcfcfc;
+        color: #a30000;
+        cursor: pointer;
+        padding: 12px 20px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        border-bottom: 1px solid #eee;
+        outline: none;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 4px 4px 0 0;
+    }
+    .collapsible-header:hover {
+        background-color: #f5f5f5;
+    }
+    .collapsible-header.collapsed {
+        border-bottom: none;
+        border-radius: 4px;
+    }
+    .toggle-icon {
+        font-size: 10px;
+        transition: transform 0.2s ease;
+    }
+    .collapsible-header.collapsed .toggle-icon {
+        transform: rotate(-90deg);
+    }
+    .collapsible-content {
+        padding: 20px;
+        display: block;
+    }
+
+    /* Column Layouts within Sections */
     .form-columns {
         display: flex;
         gap: 40px;
     }
-    
-    /* FORCED EQUAL COLUMNS */
     .column {
         flex: 1;
         width: 50%;
@@ -217,7 +281,7 @@
         font-size: 13px;
     }
 
-    /* Full Width Row Styling */
+    /* Full Width Row Styling inside collapsibles */
     .form-group-full {
         display: flex;
         align-items: flex-start;
@@ -261,7 +325,7 @@
         height: 100px;
     }
     .textarea-xlarge {
-        height: 250px;
+        height: 150px;
     }
     select {
         cursor: pointer;
@@ -359,7 +423,7 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 320px;
+        width: 380px;
         background-color: #fff;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -378,9 +442,31 @@
         align-items: center;
         font-weight: bold;
     }
+    .chat-header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .chat-options {
+        display: flex;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: normal;
+    }
+    .chat-options label {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        cursor: pointer;
+    }
+    .chat-options input[type="checkbox"] {
+        margin: 0;
+        cursor: pointer;
+    }
     .close-chat {
         cursor: pointer;
         font-size: 14px;
+        margin-left: 10px;
     }
     .chat-body {
         height: 250px;
@@ -476,9 +562,31 @@
                 <button class="btn-engage" onclick="toggleEngageMenu('engageMenuHeader', event)">Engage</button>
                 <div id="engageMenuHeader" class="dropdown-content">
                     <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
-                    <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Center of Excellence (COE)</label>
+                    
+                    <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: Center of Excellence (COE)</label>
+                    <div class="sub-options" style="display: none;">
+                        <label class="dropdown-sub-item"><input type="checkbox"> Address Validation</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> New Contract/Amendment (Non RFx)</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> RFx/Proactive Bid</label>
+                    </div>
+
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
-                    <label class="dropdown-item disabled-item"><input type="checkbox" disabled> Deal Assurance: CPE Services</label>
+                    
+                    <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: CPE Services</label>
+                    <div class="sub-options" style="display: none;">
+                        <label class="dropdown-sub-item"><input type="checkbox"> CPE Assessments</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> CPE Availability Validation</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> CLE/VLE Setup</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Setting up Non-Std Supplier</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Custom Discounts</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Custom Rates/Costs</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Quoting Support</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Quoting Training/ Troubleshooting Support</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> CPE Template Building</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> CPE Counseling/ Guidance /Strategy</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> Non-Standard MRP</label>
+                    </div>
+
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Implementation Assurance (IA)</label>
                     <label class="dropdown-item"><input type="checkbox"> Tech Ops: Global Integrated Architect (GIA)</label>
@@ -494,349 +602,369 @@
 
     <div class="form-body">
         
-        <div class="form-columns">
-            <div class="column">
-                <div class="form-group">
-                    <label>Opportunity ID</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="O-3928292" class="readonly-input" readonly>
+        <div class="collapsible-section">
+            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
+                Opportunity & Customer Details <span class="toggle-icon">&#9660;</span>
+            </button>
+            <div class="collapsible-content">
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Opportunity ID</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="O-3928292" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>NASP</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="19HNYR" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Contract ID</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Segment</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="US" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Customer Name</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="SPRINKLE DOODLES" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Master Customer<br>Contracting Country</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="US" class="readonly-input" readonly>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>NASP</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="19HNYR" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Contract ID</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="None">
-                    </div>
-               </div>
-
-                <div class="form-group">
-                    <label>Segment</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="US" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>RFP/RFI</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="No" checked> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Customer Name</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="SPRINKLE DOODLES" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Request Details</label>
-                    <div class="input-wrapper">
-                        <textarea class="textarea-large readonly-input" readonly>Bosch opportunity needs some analysis based on tax feedback
-Bosch is looking for Cisco managed routers (MWAN) on MPLS network with Central Germany MRP
-
-Attached is the fille “Bosch - Criteria for assessment” word document</textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Intake Analysis</label>
-                    <div class="input-wrapper">
-                        <textarea class="textarea-large readonly-input" readonly>The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category.
-It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Date Engaged</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="2026-02-06" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Requested Due Date</label>
-                    <div class="input-wrapper multi-field">
-                        <input type="text" value="2026-03-13" class="readonly-input" readonly style="width: 50%;">
-                        <span class="inline-label">Days Remaining</span>
-                        <input type="text" value="19" class="readonly-input" readonly style="width: 20%; text-align: center;">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Date Completed</label>
-                    <div class="input-wrapper">
-                        <div class="input-with-icon">
-                            <input type="text">
-                            <button class="icon-btn">&#128197;</button>
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Account Manager</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="Smith, John" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Solutions Architect (SA)</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="Jones, Mary" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Requested By</label>
+                            <div class="input-wrapper" style="display: flex;">
+                                <input type="text" value="Arnold, Stephen K" class="readonly-input" readonly style="flex-grow: 1;">
+                                <button class="info-btn">i</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Close Notes</label>
-                    <div class="input-wrapper">
-                        <textarea></textarea>
-                    </div>
-             </div>
-
-                <div class="form-group">
-                    <label>Tax Approval</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Regulatory Approval</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>VZ Sourcing Approval</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>MRP Aggregator</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Value $$</label>
-                    <div class="input-wrapper">
-                        <div class="value-group">
-                            <select>
-                                <option>$</option>
-                            </select>
-                            <input type="text" value="0.00">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>TCV $$</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="$100,000.00">
-                    </div>
-             </div>
-                
-                <div class="form-group">
-                    <label>Master Customer<br>Contracting Country</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="US" class="readonly-input" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="form-group">
-                    <label>Request Category</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>-- None --</option>
-                            <option>BAU</option>
-                            <option selected>Custom</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Request Type</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>-- Select --</option>
-			                <option>CLE/VLE Setup</option>
-                            <option>CPE Assessment</option>
- 			                <option>CPE Availability Validation</option>           
-                            <option>CPE Counseling/Guidance/Strategy</option>
-                            <option>CPE Template Build</option>
-                            <option>Custom Discounts</option>
-                            <option>Custom Rates/Costs</option>
-                            <option>Non-Standard MRP</option>
-                            <option>Set up Non-Std Supplier</option>        
-                            <option>Quote Support</option>
-                            <option>Quote Training</option>        
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Quoting Support</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>-- None --</option>
-                            <option>Help With PQ quote CPE (Error Message)</option>
-                            <option>Help With CPE Template ID error</option>
-                            <option>Help with PQ ID</option>
-                            <option>Help with CLE/VLE</option>
-                            <option>Help with Error Message</option>
-                            <option>Help with Affected Site error on CPE</option>
-                            <option>Help with Affected Service ID error on CPE</option>
-                            <option>Help with CPE Template ID</option>
-                            <option>Help with Vendor Quote</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>DLM Nominated</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="No" checked> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Account Manager</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="Smith, John" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Solutions Architect (SA)</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="Jones, Mary" class="readonly-input" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>TechOps POC</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="Miller, Sam">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>PCM Needed</label>
-                    <div class="input-wrapper multi-field">
-                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="Yes"> Yes</label>
-                        <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="No"> No</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>PCM POC</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="Zunaid Sheikh">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Requested By</label>
-                    <div class="input-wrapper" style="display: flex;">
-                        <input type="text" value="Arnold, Stephen K" class="readonly-input" readonly style="flex-grow: 1;">
-                        <button class="info-btn">i</button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Assigned To</label>
-                    <div class="input-wrapper">
-                        <div class="input-with-icon required-input">
-                            <input type="text" class="required-input">
-                            <button class="icon-btn">&#128269;</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Status</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>New</option>
-                            <option>Under Review</option>
-                            <option>Pending Assignment</option>
-                            <option>On Hold</option>
-                            <option>Working</option>
-                            <option>Closed - Complete</option>
-                            <option>Closed - Incomplete</option>
-                            <option>Rejected</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Attachment Information</label>
-                    <div class="input-wrapper">
-                        <div class="rich-text-box textarea-xlarge">
-                            <strong>File Name:</strong> AYS Ticket Assignment Process<br>
-                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link</a><br>
-                            <strong>Summary:</strong> This document outlines the step-by-step workflow for managing AYS tickets, including notification, information gathering, routing determination, and assignment execution.<br><br>
-
-                            <strong>File Name:</strong> AYS Ticket Assignment Screenshot<br>
-                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link</a><br>
-                            <strong>Summary:</strong> This screenshot displays an active AYS system incident ticket (INC016284342) where a user is requesting Tier 2 support to activate a specific CPE template so they can complete a quote.<br><br>
-
-                            <strong>File Name:</strong> CPE INTAKE Requirements (Short Version)<br>
-                            <strong>URL:</strong> <a href="https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link</a><br>
-                            <strong>Summary:</strong> This document details the mission, supported partnerships, and service offerings of the CPE Support Team, while outlining a goal to transition from a fragmented intake process to a streamlined, single-channel model.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>ProQuest Quote IDs</label>
-                    <div class="input-wrapper">
-                        <input type="text" value="215384443-0, 0216998745-1">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Invoicing Model</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>-- None --</option>
-                            <option>Local to Local (L2L)</option>
-                            <option>Non Local to Local (NL2L)</option>
-                            <option>Central</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Billing Method</label>
-                    <div class="input-wrapper">
-                        <select>
-                            <option>-- None --</option>
-                            <option>Purchase</option>
-                            <option>Monthly Recurring Plan (MRP)</option>
-                            <option>Customer Provided</option>
-                            <option>Customer Furnished Equipment</option>
-                            <option>Direct Lease</option>
-                        </select>
-                    </div>
-                </div>
-
             </div>
         </div>
 
-        <div class="form-group-full">
-            <label>Activity Log</label>
-            <div class="input-wrapper">
-                <textarea class="textarea-large">2026-02-06 10:05 AM ET:  CPE Team Engaged
+        <div class="collapsible-section">
+            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
+                Request Information <span class="toggle-icon">&#9660;</span>
+            </button>
+            <div class="collapsible-content">
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label>RFP/RFI</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="No" checked> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Request Details</label>
+                            <div class="input-wrapper">
+                                <textarea class="textarea-large readonly-input" readonly>Bosch opportunity needs some analysis based on tax feedback
+Bosch is looking for Cisco managed routers (MWAN) on MPLS network with Central Germany MRP
+
+Attached is the fille “Bosch - Criteria for assessment” word document</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Intake Analysis</label>
+                            <div class="input-wrapper">
+                                <textarea class="textarea-large readonly-input" readonly>The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category.
+It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Request Category</label>
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>BAU</option>
+                                    <option selected>Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Request Type</label>
+                            <div class="input-wrapper">
+                                <select>
+                                
+                                    <option>CLE/VLE Setup</option>
+                                    <option>CPE Assessment</option>
+                                    <option>CPE Availability Validation</option>           
+                                    <option>CPE Counseling/Guidance/Strategy</option>
+                                    <option>CPE Template Build</option>
+                                    <option>Custom Discounts</option>
+                                    <option>Custom Rates/Costs</option>
+                                    <option>Non-Standard MRP</option>
+                                    <option>Set up Non-Std Supplier</option>        
+                                    <option>Quote Support</option>
+                                    <option>Quote Training</option>        
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Quoting Support</label>
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>Help With PQ quote CPE (Error Message)</option>
+                                    <option>Help With CPE Template ID error</option>
+                                    <option>Help with PQ ID</option>
+                                    <option>Help with CLE/VLE</option>
+                                    <option>Help with Error Message</option>
+                                    <option>Help with Affected Site error on CPE</option>
+                                    <option>Help with Affected Service ID error on CPE</option>
+                                    <option>Help with CPE Template ID</option>
+                                    <option>Help with Vendor Quote</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ProQuest Quote IDs</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="215384443-0, 0216998745-1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Attachment Information</label>
+                            <div class="input-wrapper">
+                                <div class="rich-text-box textarea-xlarge">
+                                    <strong>File Name:</strong> AYS Ticket Assignment Process<br>
+                                    <strong>URL:</strong> <a href="https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link</a><br>
+                                    <strong>Summary:</strong> This document outlines the step-by-step workflow for managing AYS tickets, including notification, information gathering, routing determination, and assignment execution.<br><br>
+
+                                    <strong>File Name:</strong> AYS Ticket Assignment Screenshot<br>
+                                    <strong>URL:</strong> <a href="https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link</a><br>
+                                    <strong>Summary:</strong> This screenshot displays an active AYS system incident ticket (INC016284342) where a user is requesting Tier 2 support to activate a specific CPE template so they can complete a quote.<br><br>
+
+                                    <strong>File Name:</strong> CPE INTAKE Requirements (Short Version)<br>
+                                    <strong>URL:</strong> <a href="https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link</a><br>
+                                    <strong>Summary:</strong> This document details the mission, supported partnerships, and service offerings of the CPE Support Team, while outlining a goal to transition from a fragmented intake process to a streamlined, single-channel model.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section">
+            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
+                Engagement Timeline & Status <span class="toggle-icon">&#9660;</span>
+            </button>
+            <div class="collapsible-content">
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Date Engaged</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="2026-02-06" class="readonly-input" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Requested Due Date</label>
+                            <div class="input-wrapper multi-field">
+                                <input type="text" value="2026-03-13" class="readonly-input" readonly style="width: 50%;">
+                                <span class="inline-label">Days Remaining</span>
+                                <input type="text" value="19" class="readonly-input" readonly style="width: 20%; text-align: center;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Date Completed</label>
+                            <div class="input-wrapper">
+                                <div class="input-with-icon">
+                                    <input type="text">
+                                    <button class="icon-btn">&#128197;</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Close Notes</label>
+                            <div class="input-wrapper">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Assigned To</label>
+                            <div class="input-wrapper">
+                                <div class="input-with-icon required-input">
+                                    <input type="text" class="required-input">
+                                    <button class="icon-btn">&#128269;</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>New</option>
+                                    <option>Under Review</option>
+                                    <option>Pending Assignment</option>
+                                    <option>On Hold</option>
+                                    <option>Working</option>
+                                    <option>Closed - Complete</option>
+                                    <option>Closed - Incomplete</option>
+                                    <option>Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>DLM Nominated</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="No" checked> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>TechOps POC</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="Miller, Sam">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>PCM Needed</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>PCM POC</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="Zunaid Sheikh">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section">
+            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
+                Approvals & Financials <span class="toggle-icon">&#9660;</span>
+            </button>
+            <div class="collapsible-content">
+                <div class="form-columns">
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Tax Approval</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Regulatory Approval</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>VZ Sourcing Approval</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>MRP Aggregator</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Value $$</label>
+                            <div class="input-wrapper">
+                                <div class="value-group">
+                                    <select>
+                                        <option>$</option>
+                                    </select>
+                                    <input type="text" value="0.00">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>TCV $$</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="$100,000.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="form-group">
+                            <label>Invoicing Model</label>
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>Local to Local (L2L)</option>
+                                    <option>Non Local to Local (NL2L)</option>
+                                    <option>Central</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Billing Method</label>
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>Purchase</option>
+                                    <option>Monthly Recurring Plan (MRP)</option>
+                                    <option>Customer Provided</option>
+                                    <option>Customer Furnished Equipment</option>
+                                    <option>Direct Lease</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapsible-section">
+            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
+                Activity Log <span class="toggle-icon">&#9660;</span>
+            </button>
+            <div class="collapsible-content">
+                <div class="form-group-full" style="width: 100%;">
+                    <div class="input-wrapper" style="width: 100%;">
+                        <textarea class="textarea-large" style="width: 100%;">2026-02-06 10:05 AM ET:  CPE Team Engaged
 2026-02-06 11:15 AM ET:  Arnold, Stephen assigned to task</textarea>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -851,9 +979,31 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         <button class="btn-engage" onclick="toggleEngageMenu('engageMenuFooter', event)">Engage</button>
         <div id="engageMenuFooter" class="dropdown-content">
             <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
-            <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Center of Excellence (COE)</label>
+            
+            <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: Center of Excellence (COE)</label>
+            <div class="sub-options" style="display: none;">
+                <label class="dropdown-sub-item"><input type="checkbox"> Address Validation</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> New Contract/Amendment (Non RFx)</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> RFx/Proactive Bid</label>
+            </div>
+
             <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
-            <label class="dropdown-item disabled-item"><input type="checkbox" disabled> Deal Assurance: CPE Services</label>
+            
+            <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: CPE Services</label>
+            <div class="sub-options" style="display: none;">
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Assessments</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Availability Validation</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CLE/VLE Setup</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Setting up Non-Std Supplier</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Custom Discounts</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Custom Rates/Costs</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Quoting Support</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Quoting Training/ Troubleshooting Support</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Template Building</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Counseling/ Guidance /Strategy</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Non-Standard MRP</label>
+            </div>
+
             <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
             <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Implementation Assurance (IA)</label>
             <label class="dropdown-item"><input type="checkbox"> Tech Ops: Global Integrated Architect (GIA)</label>
@@ -868,7 +1018,14 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
 
 <div class="chat-window" id="chatWindow">
     <div class="chat-header">
-        <span>Messaging</span>
+        <div class="chat-header-left">
+            <span>Messaging</span>
+            <div class="chat-options">
+                <label><input type="checkbox" checked> Polaris</label>
+                <label><input type="checkbox"> MSD</label>
+                <label><input type="checkbox"> Email</label>
+            </div>
+        </div>
         <span class="close-chat" onclick="toggleChat()">&#10005;</span>
     </div>
     <div class="chat-body">
@@ -886,6 +1043,16 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
 </div>
 
 <script>
+    function toggleSection(button) {
+        button.classList.toggle("collapsed");
+        var content = button.nextElementSibling;
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
+
     function closeAllPopups() {
         document.getElementById("chatWindow").style.display = "none";
         document.getElementById("alicePopup").style.display = "none";
@@ -915,12 +1082,25 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
 
     function toggleEngageMenu(menuId, event) {
         event.stopPropagation();
-        // Stop click from bubbling up and closing immediately
         var menu = document.getElementById(menuId);
         var isHidden = (menu.style.display === "none" || menu.style.display === "");
         closeAllPopups();
         if (isHidden) {
             menu.style.display = "block";
+        }
+    }
+
+    function toggleSubMenu(checkbox) {
+        var subMenu = checkbox.parentElement.nextElementSibling;
+        if (subMenu && subMenu.classList.contains('sub-options')) {
+            if (checkbox.checked) {
+                subMenu.style.display = "block";
+            } else {
+                subMenu.style.display = "none";
+                // Uncheck all sub-options when hiding
+                var subCheckboxes = subMenu.querySelectorAll('input[type="checkbox"]');
+                subCheckboxes.forEach(function(cb) { cb.checked = false; });
+            }
         }
     }
 

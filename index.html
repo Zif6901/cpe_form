@@ -70,21 +70,15 @@
     }
     
     /* Buttons */
-    .btn, .btn-alice, .btn-message, .btn-engage {
-        min-width: 110px;
-        text-align: center;
-        box-sizing: border-box;
+    .btn {
+        background-color: #fff;
+        border: 1px solid #a30000;
+        color: #a30000;
         padding: 6px 16px;
         border-radius: 3px;
         font-weight: 600;
         cursor: pointer;
         font-size: 13px;
-        white-space: nowrap;
-    }
-    .btn {
-        background-color: #fff;
-        border: 1px solid #a30000;
-        color: #a30000;
     }
     .btn:hover {
         background-color: #fdf5f5;
@@ -95,6 +89,11 @@
         background-color: #a30000;
         border: 1px solid #a30000;
         color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 3px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
     }
     .btn-alice:hover {
         background-color: #8a0000;
@@ -105,6 +104,11 @@
         background-color: #ffffff;
         border: 1px solid #a30000;
         color: #a30000;
+        padding: 6px 16px;
+        border-radius: 3px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 13px;
     }
     .btn-message:hover, .btn-engage:hover {
         background-color: #fdf5f5;
@@ -200,7 +204,6 @@
         border: 1px solid #e0e0e0;
         border-radius: 4px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        margin-bottom: 15px;
     }
     .collapsible-header {
         background-color: #fcfcfc;
@@ -304,7 +307,7 @@
     }
     
     /* Inputs */
-    input[type="text"], input[type="file"], select, textarea, .rich-text-box {
+    input[type="text"], select, textarea, .rich-text-box {
         width: 100%;
         padding: 6px 8px;
         border: 1px solid #ccc;
@@ -392,6 +395,20 @@
         font-style: italic;
         font-weight: bold;
     }
+    .value-group {
+        display: flex;
+        gap: 0;
+        width: 100%;
+    }
+    .value-group select {
+        width: 60px;
+        border-radius: 3px 0 0 3px;
+        border-right: none;
+    }
+    .value-group input {
+        border-radius: 0 3px 3px 0;
+        text-align: right;
+    }
     
     /* Footer */
     .footer {
@@ -399,7 +416,6 @@
         display: flex;
         gap: 10px;
         align-items: center;
-        justify-content: flex-end;
     }
 
     /* Modal Overlay */
@@ -410,20 +426,20 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0.5);
-        display: none;
+        display: none; /* hidden by default */
         z-index: 3000;
         align-items: center;
         justify-content: center;
     }
     .modal-content {
         background-color: #fff;
-        width: 900px;
+        width: 800px;
         border-radius: 5px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        max-height: 90vh;
+        max-height: 90vh; /* Prevents modal from being taller than screen */
     }
     .modal-header {
         background-color: #a30000;
@@ -444,13 +460,15 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        overflow-y: auto; 
+        overflow-y: auto; /* Adds scrolling if content gets too long */
     }
     .modal-instructions {
         font-size: 13px;
         color: #555;
         margin-bottom: 10px;
         font-style: italic;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
     }
     .modal-footer {
         padding: 15px 20px;
@@ -459,43 +477,6 @@
         display: flex;
         justify-content: flex-end;
         gap: 10px;
-    }
-
-    /* Tabs CSS */
-    .tab-container {
-        display: flex;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 5px;
-        gap: 5px;
-    }
-    .tab-button {
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        border-bottom: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: bold;
-        color: #555;
-        border-radius: 4px 4px 0 0;
-        transition: background 0.2s;
-    }
-    .tab-button:hover {
-        background: #eee;
-    }
-    .tab-button.active {
-        background: #fff;
-        color: #a30000;
-        border-top: 2px solid #a30000;
-        position: relative;
-        bottom: -1px;
-    }
-    .tab-content {
-        display: none;
-        padding-top: 10px;
-    }
-    .tab-content.active {
-        display: block;
     }
 
     /* Floating Chat Window */
@@ -596,7 +577,7 @@
         right: 20px;
         z-index: 2000;
         box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        border-radius: 8px;
+        border-radius: 12px;
         background: #fff;
         width: 380px;
         overflow: hidden;
@@ -608,187 +589,15 @@
     }
     .alice-close-btn {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 28px;
-        height: 28px;
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid #ccc;
-        border-radius: 50%;
+        top: 15px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        background: transparent;
+        border: none;
         cursor: pointer;
-        font-size: 12px;
-        font-weight: bold;
-        color: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-    }
-    .alice-close-btn:hover {
-        background: #eee;
     }
 </style>
-<script>
-    function toggleSection(button) {
-        button.classList.toggle("collapsed");
-        var content = button.nextElementSibling;
-        if (content.style.display === "none" || content.style.display === "") {
-            content.style.display = "block";
-        } else {
-            content.style.display = "none";
-        }
-    }
-    
-    function openRequestInfoModal() {
-        document.getElementById('requestInfoModal').style.display = 'flex';
-    }
-    
-    function closeRequestInfoModal() {
-        document.getElementById('requestInfoModal').style.display = 'none';
-    }
-
-    // Modal Tabs logic
-    function openModalTab(evt, tabId) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-            tabcontent[i].classList.remove("active");
-        }
-        tablinks = document.getElementsByClassName("tab-button");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(tabId).style.display = "block";
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-
-    // Dynamic show/hide for Address Validation file upload (RFx Tab)
-    function toggleAddressAttachment() {
-        var checkbox = document.getElementById('address_val_checkbox');
-        var attachmentGroup = document.getElementById('address_attachment_group');
-        if (checkbox && attachmentGroup) {
-            attachmentGroup.style.display = checkbox.checked ? 'flex' : 'none';
-        }
-    }
-
-    function toggleAddressAttachmentAmend() {
-        var checkbox = document.getElementById('address_val_checkbox_amend');
-        var attachmentGroup = document.getElementById('address_attachment_group_amend');
-        if (checkbox && attachmentGroup) {
-            attachmentGroup.style.display = checkbox.checked ? 'flex' : 'none';
-        }
-    }
-
-    // Toggle conditional fields for "Orders Required" in Amendment Tab
-    function toggleOrdersFields() {
-        var checkbox = document.getElementById('orders_required_checkbox');
-        var fieldsGroup = document.getElementById('amendment_orders_fields');
-        if (checkbox && fieldsGroup) {
-            fieldsGroup.style.display = checkbox.checked ? 'flex' : 'none';
-        }
-    }
-
-    // Toggle Functions for ALICE, Chat, and Engage Menu
-    function toggleAlicePopup() {
-        var popup = document.getElementById('alicePopup');
-        if (popup.style.display === 'block') {
-            popup.style.display = 'none';
-        } else {
-            popup.style.display = 'block';
-            document.getElementById('chatWindow').style.display = 'none'; // Close chat if open
-        }
-    }
-
-    function toggleChat() {
-        var chat = document.getElementById('chatWindow');
-        if (chat.style.display === 'flex') {
-            chat.style.display = 'none';
-        } else {
-            chat.style.display = 'flex';
-            document.getElementById('alicePopup').style.display = 'none'; // Close ALICE if open
-        }
-    }
-
-    function toggleEngageMenu(menuId, event) {
-        event.stopPropagation();
-        var menu = document.getElementById(menuId);
-        var isDisplayed = menu.style.display === 'block';
-        
-        // Close all dropdowns first
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            dropdowns[i].style.display = "none";
-        }
-        
-        // Toggle target menu
-        if (!isDisplayed) {
-            menu.style.display = 'block';
-        }
-    }
-
-    function toggleSubMenu(checkbox) {
-        var subOptions = checkbox.parentElement.nextElementSibling;
-        if (subOptions && subOptions.classList.contains('sub-options')) {
-            subOptions.style.display = checkbox.checked ? 'block' : 'none';
-        }
-    }
-
-    // Close dropdowns if clicking outside
-    window.onclick = function(event) {
-        if (!event.target.matches('.btn-engage') && !event.target.closest('.dropdown-content')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                dropdowns[i].style.display = "none";
-            }
-        }
-    }
-
-    // Add Quoter Logic
-    function addQuoter() {
-        var container = document.getElementById('quoter-container');
-        var wrapper = document.createElement('div');
-        wrapper.className = 'input-with-icon';
-        wrapper.innerHTML = '<input type="text" value=""><button class="icon-btn">&#128269;</button>';
-        container.appendChild(wrapper);
-    }
-
-    // Add Validator Logic
-    function addValidator() {
-        var container = document.getElementById('validator-container');
-        var wrapper = document.createElement('div');
-        wrapper.className = 'input-with-icon';
-        wrapper.innerHTML = '<input type="text" value=""><button class="icon-btn">&#128269;</button>';
-        container.appendChild(wrapper);
-    }
-
-    // Toggle Hold Reason Field based on Status (Main Form)
-    function toggleHoldReason() {
-        var statusSelect = document.getElementById('main_status_dropdown');
-        var holdReasonGroup = document.getElementById('hold_reason_group');
-        if (statusSelect && holdReasonGroup) {
-            if (statusSelect.value === 'On Hold') {
-                holdReasonGroup.style.display = 'flex';
-            } else {
-                holdReasonGroup.style.display = 'none';
-            }
-        }
-    }
-
-    // Toggle Hold Reason Field based on Status (Address Validation Tab)
-    function toggleAddressHoldReason() {
-        var statusSelect = document.getElementById('address_status_dropdown');
-        var holdReasonGroup = document.getElementById('address_hold_reason_group');
-        if (statusSelect && holdReasonGroup) {
-            if (statusSelect.value === 'On Hold') {
-                holdReasonGroup.style.display = 'flex';
-            } else {
-                holdReasonGroup.style.display = 'none';
-            }
-        }
-    }
-</script>
 </head>
 <body>
 
@@ -797,9 +606,10 @@
         <div class="header-left">
             <div class="menu-icon">&#9776;</div>
             <div class="title-block">
-                <div class="title-main">1@TTI DA-COE Engagement</div>
-                <div class="title-sub"><strong>Case# 12345</strong></div>
+                <div class="title-main">1@TTI CPE Engagements</div>
+                <div class="title-sub">New record <span>View: Default view*</span></div>
             </div>
+       
         </div>
         <div class="header-right">
             <div class="header-icons">
@@ -807,6 +617,7 @@
                 <span>&#9881;</span>  
                 <span>&bull;&bull;&bull;</span> 
             </div>
+            
             <button class="btn-alice" onclick="toggleAlicePopup()">ALICE</button>
             <button class="btn-message" onclick="toggleChat()">Message</button>
 
@@ -814,17 +625,20 @@
                 <button class="btn-engage" onclick="toggleEngageMenu('engageMenuHeader', event)">Engage</button>
                 <div id="engageMenuHeader" class="dropdown-content">
                     <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
+        
                     <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: Center of Excellence (COE)</label>
                     <div class="sub-options" style="display: none;">
                         <label class="dropdown-sub-item"><input type="checkbox"> Address Validation</label>
+        
                         <label class="dropdown-sub-item"><input type="checkbox"> New Contract/Amendment (Non RFx)</label>
                         <label class="dropdown-sub-item"><input type="checkbox"> RFx/Proactive Bid</label>
                     </div>
 
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
+                    
                     <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: CPE Services</label>
                     <div class="sub-options" style="display: none;">
-                      <label class="dropdown-sub-item"><input type="checkbox"> CPE Assessments</label>
+                        <label class="dropdown-sub-item"><input type="checkbox"> CPE Assessments</label>
   
                         <label class="dropdown-sub-item"><input type="checkbox"> CPE Availability Validation</label>
                         <label class="dropdown-sub-item"><input type="checkbox"> CLE/VLE Setup</label>
@@ -838,11 +652,13 @@
                         <label class="dropdown-sub-item"><input type="checkbox"> CPE Template Building</label>
                         <label class="dropdown-sub-item"><input type="checkbox"> CPE Counseling/ Guidance /Strategy</label>
                         <label class="dropdown-sub-item"><input type="checkbox"> Non-Standard MRP</label>
+              
                     </div>
 
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
                     <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Implementation Assurance (IA)</label>
                     <label class="dropdown-item"><input type="checkbox"> Tech Ops: Global Integrated Architect (GIA)</label>
+           
                     <label class="dropdown-item"><input type="checkbox"> Tech Ops &amp; Architecture: OPD / SDA</label>
                     <label class="dropdown-item"><input type="checkbox"> Tech Ops: Integrated Contract Management (ICM)</label>
                 </div>
@@ -854,6 +670,7 @@
         </div>
     </div>
 
+   
     <div class="form-body">
         
         <div class="collapsible-section">
@@ -888,12 +705,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Branch</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="PRIN MOUNTAIN" class="readonly-input" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label>Customer Name</label>
                             <div class="input-wrapper">
                                 <input type="text" id="main_cust_name" value="SPRINKLE DOODLES" class="readonly-input" readonly>
@@ -906,30 +717,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Proposed Solution<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
+                            <label>Product</label>
                             <div class="input-wrapper">
-                                <select multiple style="height: auto; min-height: 100px;">
-                                    <option value="Network only">Network only</option>
-                                    <option value="Managed">Managed</option>
-                                    <option value="Wave">Wave</option>
-                                    <option value="Eline">Eline</option>
-                                    <option value="CPE Only">CPE Only</option>
-                                    <option value="CPE with Maintenance">CPE with Maintenance</option>
-                                    <option value="VOIP">VOIP</option>
-                                    <option value="IPCC">IPCC</option>
-                                    <option value="Webex">Webex</option>
-                                    <option value="Legacy">Legacy</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>TCV</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="$10,000" class="readonly-input" readonly>
+                                <input type="text" value="">
                             </div>
                         </div>
                     </div>
+                    
                     <div class="column">
                         <div class="form-group">
                             <label>Account Manager</label>
@@ -951,35 +745,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Opportunity Type</label>
-                            <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="opp_type" value="New Business" checked> New Business</label>
-                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="opp_type" value="Renewal"> Renewal</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Customer Type</label>
-                            <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="cust_type" value="Existing" checked> Existing</label>
-                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="cust_type" value="New"> New</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>DLM Status</label>
+                            <label>DLM Stage</label>
                             <div class="input-wrapper">
-                                <input type="text" value="Nominated" class="readonly-input" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Deal Stage</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="1 Qualify" class="readonly-input" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>GVP</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="Pope" class="readonly-input" readonly>
+                                <input type="text" value="Nominated">
                             </div>
                         </div>
                     </div>
@@ -987,6 +755,7 @@
             </div>
         </div>
 
+      
         <div class="collapsible-section">
             <button type="button" class="collapsible-header" onclick="toggleSection(this)">
                 Request Information <span class="toggle-icon">&#9660;</span>
@@ -997,25 +766,13 @@
                         <div class="form-group">
                             <label>RFP/RFI</label>
                             <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="Yes" checked> Yes</label>
+                 
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="rfp_rfi" value="No" checked> No</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>RFP Round</label>
-                            <div class="input-wrapper">
-                                <select>
-                                    <option value="" disabled selected>Select Round</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="BAFO">BAFO</option>
-                                    <option value="LAFO">LAFO</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
+            
                             <label>Request Details</label>
                             <div class="input-wrapper">
                                 <textarea class="textarea-large readonly-input" readonly>Bosch opportunity needs some analysis based on tax feedback
@@ -1025,121 +782,116 @@ Attached is the fille “Bosch - Criteria for assessment” word document</texta
                             </div>
                         </div>
                         <div class="form-group">
+          
                             <label>Intake Analysis</label>
                             <div class="input-wrapper">
                                 <textarea class="textarea-large readonly-input" readonly>The request mentions "analysis based on tax feedback" and "Central Germany MRP" which indicates a need for research into CPE/Services availability and contracting types across multiple countries, aligning with the "Assessment" category.
 It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a custom configuration is needed.</textarea>
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>Any Alternative Solution proposed</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Any custom elements or special design requirements</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Rework</label>
-                            <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="rework_check" value="Yes"> Yes</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Rework Reasons<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
-                            <div class="input-wrapper">
-                                <select multiple style="height: auto; min-height: 90px;">
-                                    <option value="Addition of Sites">Addition of Sites</option>
-                                    <option value="Deletion of Sites">Deletion of Sites</option>
-                                    <option value="Technology Change">Technology Change</option>
-                                    <option value="Solution Change">Solution Change</option>
-                                    <option value="CPE Change">CPE Change</option>
-                                </select>
-                            </div>
-                        </div>
-                        
                     </div>
             
                     <div class="column">
                         <div class="form-group">
+                            <label>Request Category</label>
+                            <div class="input-wrapper">
+        
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>BAU</option>
+  
+                                    <option selected>Custom</option>
+                                </select>
+                            </div>
+     
+                        </div>
+                        <div class="form-group">
                             <label>Request Type</label>
+                           
                             <div class="input-wrapper">
                                 <select>
-                                    <option>Address Validation</option>
-                                    <option>New Contract/Amendment (Non RFx)</option>
-                                    <option>RFx/Proactive Bid</option>
+                                
+                                  
+                                    <option>CLE/VLE Setup</option>
+                                    <option>CPE Assessment</option>
+                                    <option>CPE Availability Validation</option>           
+           
+                                    <option>CPE Counseling/Guidance/Strategy</option>
+                                    <option>CPE Template Build</option>
+                                    
+                                    <option>Custom Discounts</option>
+                                    <option>Custom Rates/Costs</option>
+                                    <option>Non-Standard MRP</option>
+                         
+                                    <option>Set up Non-Std Supplier</option>        
+                                    <option>Quote Support</option>
+                                    <option>Quote Training</option>    
                                 </select>
                             </div>
                         </div>
+            
                         <div class="form-group">
-                            <label>Number of Countries</label>
+                            <label>Quoting Support</label>
                             <div class="input-wrapper">
-                                <input type="text" value="">
+                             
+                                <select>
+                                    <option>-- Select --</option>
+                                    <option>Help With PQ quote CPE (Error Message)</option>
+                 
+                                    <option>Help With CPE Template ID error</option>
+                                    <option>Help with PQ ID</option>
+                                    <option>Help with CLE/VLE</option>
+                                    <option>Help with Error Message</option>
+                                    <option>Help with Affected Site error on CPE</option>
+                  
+                                    <option>Help with Affected Service ID error on CPE</option>
+                                    <option>Help with CPE Template ID</option>
+                                   
+                                    <option>Help with Vendor Quote</option>
+                                </select>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label>Number of Site</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="">
+                            <label></label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="support_type" value="System issue"> System issue</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="support_type" value="Training Opportunity"> Training Opportunity</label>
                             </div>
                         </div>
+            
                         <div class="form-group">
                             <label>ProQuest Quote IDs</label>
                             <div class="input-wrapper">
+                            
                                 <input type="text" value="215384443-0, 0216998745-1">
                             </div>
                         </div>
                         <div class="form-group">
+                
                             <label>Attachment Information</label>
                             <div class="input-wrapper">
                                 <div class="rich-text-box textarea-xlarge">
+                        
                                     <strong>File Name:</strong> AYS Ticket Assignment Process<br>
                                     <strong>URL:</strong> <a href="https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1s9Nu58axgTANesdyqcUmlnE_ZLvo7zH9HwmwE8JoeB0/edit?usp=drive_link</a><br>
                                     <strong>Summary:</strong> This document outlines the step-by-step workflow for managing AYS tickets, including notification, information gathering, routing determination, and assignment execution.<br><br>
 
                                     <strong>File Name:</strong> AYS Ticket Assignment Screenshot<br>
                                     <strong>URL:</strong> <a href="https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1uqjby7oAaDJ4-19FmLZ7Ygob9g5_k6_KdMDYDUell3E/edit?usp=drive_link</a><br>
+         
                                     <strong>Summary:</strong> This screenshot displays an active AYS system incident ticket (INC016284342) where a user is requesting Tier 2 support to activate a specific CPE template so they can complete a quote.<br><br>
 
                                     <strong>File Name:</strong> CPE INTAKE Requirements (Short Version)<br>
+ 
                                     <strong>URL:</strong> <a href="https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link" target="_blank">https://docs.google.com/document/d/1CjCEPAKW1GfkSrtOjkHf-8WnX09Yq8kRQyrBeaxw-_E/edit?usp=drive_link</a><br>
                                     <strong>Summary:</strong> This document details the mission, supported partnerships, and service offerings of the CPE Support Team, while outlining a goal to transition from a fragmented intake process to a streamlined, single-channel model.
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>VISE ID</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>AYS Ticket</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Iteration/Scenario<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
-                            <div class="input-wrapper">
-                                <select multiple style="height: auto; min-height: 110px;">
-                                    <option value="Product">Product</option>
-                                    <option value="Bandwidth">Bandwidth</option>
-                                    <option value="CPE contacting">CPE contacting</option>
-                                    <option value="CPE Maintenance">CPE Maintenance</option>
-                                    <option value="Term">Term</option>
-                                    <option value="NA">NA</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
+      
             </div>
         </div>
 
@@ -1148,119 +900,110 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
                 Engagement Timeline & Status <span class="toggle-icon">&#9660;</span>
             </button>
             <div class="collapsible-content">
+                
                 <div class="form-columns">
                     <div class="column">
                         <div class="form-group">
                             <label>Date Engaged</label>
+                        
                             <div class="input-wrapper">
                                 <input type="text" value="2026-02-06" class="readonly-input" readonly>
                             </div>
                         </div>
-                         <div class="form-group">
-                            <label>Status</label>
-                            <div class="input-wrapper">
-                                <select id="main_status_dropdown" onchange="toggleHoldReason()">
-                                    <option value="New">New</option>
-                                    <option value="Under Review">Under Review</option>
-                                    <option value="Pending Assignment">Pending Assignment</option>
-                                    <option value="On Hold">On Hold</option>
-                                    <option value="Working">Working</option>
-                                    <option value="Closed - Complete">Closed - Complete</option>
-                                    <option value="Closed - Incomplete">Closed - Incomplete</option>
-                                    <option value="Rejected">Rejected</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" id="hold_reason_group" style="display: none;">
-                            <label>Hold Reason</label>
-                            <div class="input-wrapper">
-                                <select>
-                                    <option value="" disabled selected>Select Reason</option>
-                                    <option value="With GL">With GL</option>
-                                    <option value="PCM">PCM</option>
-                                    <option value="IT">IT</option>
-                                    <option value="AT">AT</option>
-                                    <option value="Legal">Legal</option>
-                                    <option value="CD Approval">CD Approval</option>
-                                    <option value="SA for design">SA for design</option>
-                                </select>
-                            </div>
-                        </div>
-
+       
                         <div class="form-group">
                             <label>Requested Due Date</label>
                             <div class="input-wrapper multi-field">
+                      
                                 <input type="text" value="2026-03-13" class="readonly-input" readonly style="width: 50%;">
                                 <span class="inline-label">Days Remaining</span>
                                 <input type="text" value="19" class="readonly-input" readonly style="width: 20%; text-align: center;">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Days on Hold</label>
-                            <div class="input-wrapper">
-                                <input type="text" value="12" class="readonly-input" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
+                      
                             <label>Date Completed</label>
                             <div class="input-wrapper">
                                 <div class="input-with-icon">
+                               
                                     <input type="text">
                                     <button class="icon-btn">&#128197;</button>
                                 </div>
+                         
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Close Notes</label>
+                   
                             <div class="input-wrapper">
                                 <textarea></textarea>
                             </div>
                         </div>
+      
                     </div>
                     <div class="column">
                         <div class="form-group">
-                            <label>Quoter</label>
-                            <div class="input-wrapper" style="flex-direction: column; gap: 8px;">
-                                <div id="quoter-container" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
-                                    <div class="input-with-icon required-input">
-                                        <input type="text" class="required-input">
-                                        <button class="icon-btn">&#128269;</button>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn" style="align-self: flex-start; min-width: 0; padding: 4px 8px; font-size: 11px;" onclick="addQuoter()">+ Add Quoter</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Deal Strategist</label>
+                            <label>Assigned To</label>
+           
                             <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" value="Miller, Sam">
+                                <div class="input-with-icon required-input">
+                                    <input type="text" class="required-input">
+          
                                     <button class="icon-btn">&#128269;</button>
                                 </div>
                             </div>
+             
                         </div>
                         <div class="form-group">
-                            <label>Bid Manager</label>
+                            <label>Status</label>
                             <div class="input-wrapper">
-                                <input type="text" value="">
+       
+                                <select>
+                                    <option>New</option>
+                                    <option>Under Review</option>
+  
+                                    <option>Pending Assignment</option>
+                                    <option>On Hold</option>
+                            
+                                    <option>Working</option>
+                                    <option>Closed - Complete</option>
+                                    <option>Closed - Incomplete</option>
+                
+                                    <option>Rejected</option>
+                                </select>
+                            </div>
+                    
+                        </div>
+                        <div class="form-group">
+                            <label>DLM Nominated</label>
+                            <div class="input-wrapper multi-field">
+            
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="dlm_nominated" value="No" checked> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+            
+                            <label>TechOps POC</label>
+                            <div class="input-wrapper">
+                                <input type="text" value="Miller, Sam">
+                   
                             </div>
                         </div>
                         <div class="form-group">
                             <label>PCM Needed</label>
+             
                             <div class="input-wrapper multi-field">
                                 <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="pcm_needed" value="No"> No</label>
                             </div>
                         </div>
                         <div class="form-group">
+             
                             <label>PCM POC</label>
                             <div class="input-wrapper">
                                 <input type="text" value="Zunaid Sheikh">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>GIS Engaged</label>
-                            <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="gis_engaged" value="Yes"> Yes</label>
+                    
                             </div>
                         </div>
                     </div>
@@ -1269,103 +1012,102 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         </div>
 
         <div class="collapsible-section">
+   
             <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                Milestones <span class="toggle-icon">&#9660;</span>
+                Approvals & Financials <span class="toggle-icon">&#9660;</span>
             </button>
             <div class="collapsible-content">
                 <div class="form-columns">
                     <div class="column">
+     
                         <div class="form-group">
-                            <label>RFP Release Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Kick Off Call Scheduled Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>PCM Due Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Quotes submitted to PCM Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="form-group">
-                            <label>RFP Submission Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Due Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon required-input">
-                                    <input type="text" value="2026-02-27" class="required-input">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Extended Bid Response Due Date</label>
-                            <div class="input-wrapper">
-                                <div class="input-with-icon">
-                                    <input type="text" placeholder="YYYY-MM-DD">
-                                    <button class="icon-btn">&#128197;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapsible-section">
-            <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                Tasks <span class="toggle-icon">&#9660;</span>
-            </button>
-            <div class="collapsible-content">
-                <div class="form-columns">
-                    <div class="column">
-                        <div class="form-group">
-                            <label>Contracting Required</label>
+                            <label>Tax Approval</label>
                             <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="task_contracting_req" value="Yes"> Yes</label>
+                     
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="tax_approval" value="No"> No</label>
                             </div>
                         </div>
+                        <div class="form-group">
+             
+                            <label>Regulatory Approval</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="regulatory_approval" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+             
+                            <label>VZ Sourcing Approval</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="vz_sourcing_approval" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+             
+                            <label>MRP Aggregator</label>
+                            <div class="input-wrapper multi-field">
+                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="Yes"> Yes</label>
+                                <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="mrp_aggregator" value="No"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+             
+                            <label>Value $$</label>
+                            <div class="input-wrapper">
+                                <div class="value-group">
+                      
+                                    <select>
+                                        <option>$</option>
+                                    </select>
+          
+                                    <input type="text" value="0.00">
+                                </div>
+                            </div>
+            
+                        </div>
+                        <div class="form-group">
+                            <label>TCV $$</label>
+                            <div class="input-wrapper">
+     
+                                <input type="text" value="$100,000.00">
+                            </div>
+                        </div>
+                   
                     </div>
                     <div class="column">
                         <div class="form-group">
-                            <label>CFS</label>
-                            <div class="input-wrapper multi-field">
-                                <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="task_cfs" value="Yes"> Yes</label>
+                            <label>Invoicing Model</label>
+                        
+                            <div class="input-wrapper">
+                                <select>
+                                    <option>-- Select --</option>
+                         
+                                    <option>Local to Local (L2L)</option>
+                                    <option>Non Local to Local (NL2L)</option>
+                                    <option>Central</option>
+          
+                                </select>
                             </div>
                         </div>
+                        <div class="form-group">
+ 
+                            <label>Billing Method</label>
+                            <div class="input-wrapper">
+                                <select>
+           
+                                    <option>-- Select --</option>
+                                    <option>Purchase</option>
+                                    <option>Monthly Recurring Plan (MRP)</option>
+                                    <option>Customer Provided</option>
+                                    <option>Customer Furnished Equipment</option>
+                       
+                                    <option>Direct Lease</option>
+                                </select>
+                            </div>
+                        </div>
+  
                     </div>
                 </div>
             </div>
@@ -1374,13 +1116,14 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         <div class="collapsible-section">
             <button type="button" class="collapsible-header" onclick="toggleSection(this)">
                 Activity Log <span class="toggle-icon">&#9660;</span>
+   
             </button>
             <div class="collapsible-content">
                 <div class="form-group-full" style="width: 100%;">
                     <div class="input-wrapper" style="width: 100%;">
-                        <textarea class="textarea-large" style="width: 100%;">2026-02-06 10:05 AM ET:  COE Team Engaged
+                        <textarea class="textarea-large" style="width: 100%;">2026-02-06 10:05 AM ET:  CPE Team Engaged
 2026-02-06 11:15 AM ET:  Arnold, Stephen assigned to task</textarea>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1396,7 +1139,9 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         <button class="btn-engage" onclick="toggleEngageMenu('engageMenuFooter', event)">Engage</button>
         <div id="engageMenuFooter" class="dropdown-content">
             <label class="dropdown-item"><input type="checkbox"> Deal Lifecycle Management (DLM)</label>
+            
             <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: Center of Excellence (COE)</label>
+       
             <div class="sub-options" style="display: none;">
                 <label class="dropdown-sub-item"><input type="checkbox"> Address Validation</label>
                 <label class="dropdown-sub-item"><input type="checkbox"> New Contract/Amendment (Non RFx)</label>
@@ -1404,12 +1149,22 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
             </div>
 
             <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Converged Svc. Support</label>
+            
             <label class="dropdown-item"><input type="checkbox" onchange="toggleSubMenu(this)"> Deal Assurance: CPE Services</label>
             <div class="sub-options" style="display: none;">
                 <label class="dropdown-sub-item"><input type="checkbox"> CPE Assessments</label>
-                <label class="dropdown-sub-item"><input type="checkbox"> Address Validation</label>
-                <label class="dropdown-sub-item"><input type="checkbox"> New Contract/Amendment</label>
-                <label class="dropdown-sub-item"><input type="checkbox"> RFx/Proactive Bid</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Availability Validation</label>
+            
+                <label class="dropdown-sub-item"><input type="checkbox"> CLE/VLE Setup</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Setting up Non-Std Supplier</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Custom Discounts</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Custom Rates/Costs</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Quoting Support</label>
+          
+                <label class="dropdown-sub-item"><input type="checkbox"> Quoting Training/ Troubleshooting Support</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Template Building</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> CPE Counseling/ Guidance /Strategy</label>
+                <label class="dropdown-sub-item"><input type="checkbox"> Non-Standard MRP</label>
             </div>
 
             <label class="dropdown-item"><input type="checkbox"> Deal Assurance: Deal Readiness Assessment (DRA)</label>
@@ -1428,41 +1183,132 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
 <div id="requestInfoModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <span>DA-COE Engagement Information Request Form</span>
+            <span>CPE Engagement Information Request Form</span>
             <span class="modal-close" onclick="closeRequestInfoModal()">&#10005;</span>
         </div>
         <div class="modal-body">
-            
             <div class="modal-instructions">
-                To ensure accurate deliverables we will be scheduling a kickoff call based on your availability. Could you please confirm/provide the details below which are mandatory in order to commence the quoting task :
+                Please provide the requested information in the sections that are checked
+            </div>
+            
+            <div class="form-group">
+                <label>Opportunity ID</label>
+                <div class="input-wrapper">
+                    <input type="text" id="modal_opp_id" class="readonly-input" readonly>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Customer Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="modal_cust_name" class="readonly-input" readonly>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Account Manager</label>
+                <div class="input-wrapper multi-field" style="width: 65%;">
+                    <div class="input-with-icon" style="flex-grow: 1;">
+                        <input type="text" id="modal_acc_mgr">
+                        <button class="icon-btn">&#128269;</button> </div>
+                    <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Solutions Architect (SA)</label>
+                <div class="input-wrapper multi-field" style="width: 65%;">
+                    <div class="input-with-icon" style="flex-grow: 1;">
+                        <input type="text" id="modal_sa">
+                        <button class="icon-btn">&#128269;</button> </div>
+                    <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Requested By</label>
+                <div class="input-wrapper multi-field" style="width: 65%;">
+                    <div class="input-with-icon" style="flex-grow: 1;">
+                        <input type="text" id="modal_req_by">
+                        <button class="icon-btn">&#128269;</button> </div>
+                    <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
+                </div>
             </div>
 
-            <div class="collapsible-section">
-                <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                    CUSTOMER INFORMATION
+            <div class="form-group">
+                <label>Other Contact</label>
+                <div class="input-wrapper multi-field" style="width: 65%;">
+                    <div class="input-with-icon" style="flex-grow: 1;">
+                        <input type="text" id="modal_other_contact">
+                        <button class="icon-btn">&#128269;</button> 
+                    </div>
+                    <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
+                </div>
+            </div>
+
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> CPE Assessment Information
+                    </span>
                     <span class="toggle-icon">&#9660;</span>
                 </button>
-                <div class="collapsible-content">
+                <div class="collapsible-content" style="display: none;">
                     <div class="form-columns">
                         <div class="column">
                             <div class="form-group">
-                                <label>NASP ID</label>
+                                <label>Contract ID</label>
                                 <div class="input-wrapper">
-                                    <input type="text" value="19HNYR">
+                                    <input type="text">
                                 </div>
                             </div>
+                            
                             <div class="form-group">
-                                <label>SFDC Opportunity ID</label>
+                                <label>Master Customer<br>Contracting Country</label>
                                 <div class="input-wrapper">
-                                    <input type="text" value="O-3928292">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Invoicing Model</label>
+                                <div class="input-wrapper">
+                                    <select>
+                                        <option>-- Select --</option>
+                                        <option>Local to Local (L2L)</option>
+                                        <option>Non Local to Local (NL2L)</option>
+                                        <option>Central</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="column">
                             <div class="form-group">
-                                <label>Customer Name</label>
+                                <label>Billing Method</label>
                                 <div class="input-wrapper">
-                                    <input type="text" value="SPRINKLE DOODLES">
+                                    <select>
+                                        <option>-- Select --</option>
+                                        <option>Purchase</option>
+                                        <option>Monthly Recurring Plan (MRP)</option>
+                                        <option>Customer Provided CPE</option>
+                                        <option>Customer Furnished CPE</option>
+                                        <option>Direct Lease</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>List of Destination Countries</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>OEM (original equipment manufacturer)</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
                         </div>
@@ -1470,400 +1316,45 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
                 </div>
             </div>
 
-            <div class="tab-container">
-                <button class="tab-button active" onclick="openModalTab(event, 'tab-rfx')">RFx-Proactive Bid</button>
-                <button class="tab-button" onclick="openModalTab(event, 'tab-address')">Address Validation</button>
-                <button class="tab-button" onclick="openModalTab(event, 'tab-amendment')">Amendment</button>
-            </div>
-
-            <div id="tab-rfx" class="tab-content active">
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        TEAM CONTACT INFORMATION
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>BID Manager</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Sales POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Smith, John">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Solution Architect (SA)</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Jones, Mary">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>PCM POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Zunaid Sheikh">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> CLE/VLE Setup (Custom COTS)
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Tax Approval</label>
+                                <div class="input-wrapper multi-field">
+                                    <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="modal_tax_approval" value="Yes"> Yes</label>
+                                    <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="modal_tax_approval" value="No"> No</label>
                                 </div>
                             </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Deal Strategist</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Miller, Sam">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>COE POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
+                            <div class="form-group">
+                                <label>Regulatory Approval</label>
+                                <div class="input-wrapper multi-field">
+                                    <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="modal_reg_approval" value="Yes"> Yes</label>
+                                    <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="modal_reg_approval" value="No"> No</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        QUOTE HEADER INFO
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Customer Type</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="Existing" selected>Existing</option>
-                                            <option value="New">New</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>CLE with LE ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>VLE</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Currency</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Vendor Quote</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Pricing Plan</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select an option</option>
-                                            <option value="Transactional">Transactional</option>
-                                            <option value="RTB+Transactional">RTB+Transactional</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract Term - Quote</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                            <option value="60">60</option>
-                                            <option value="72">72</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract Term - Access</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract Term - CPE</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        TIMELINE
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>RFP Released Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>PCM Due date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>RFP Submission Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        SCOPE OVERVIEW
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Address Validation Done</label>
-                                    <div class="input-wrapper multi-field">
-                                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;">
-                                            <input type="checkbox" id="address_val_checkbox" onchange="toggleAddressAttachment()"> Yes
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="address_attachment_group" style="display: none;">
-                                    <label>Address List Attachment</label>
-                                    <div class="input-wrapper">
-                                        <input type="file" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Site List Attachment</label>
-                                    <div class="input-wrapper">
-                                        <input type="file" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Proposed Solution<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
-                                    <div class="input-wrapper">
-                                        <select multiple style="height: auto; min-height: 100px;">
-                                            <option value="Network only">Network only</option>
-                                            <option value="Managed">Managed</option>
-                                            <option value="Wave">Wave</option>
-                                            <option value="Eline">Eline</option>
-                                            <option value="CPE Only">CPE Only</option>
-                                            <option value="CPE with Maintenance">CPE with Maintenance</option>
-                                            <option value="VOIP">VOIP</option>
-                                            <option value="IPCC">IPCC</option>
-                                            <option value="Webex">Webex</option>
-                                            <option value="Legacy">Legacy</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Any Alternative Solutions Proposed?</label>
-                                    <div class="input-wrapper">
-                                        <textarea placeholder="If yes, capture the details"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Any Custom Elements or Special Design Requirements?</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Diversity Type</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="None" selected>None</option>
-                                            <option value="Carrier">Carrier</option>
-                                            <option value="L2A">L2A</option>
-                                            <option value="SEGeo">SEGeo</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label># Sites</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label># Circuits</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label># Countries</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        OTHERS
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>G-Drive Links (if any)</label>
-                                    <div class="input-wrapper">
-                                        <textarea class="textarea-large"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>RFP Round</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="" disabled selected>Select Round</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="BAFO">BAFO</option>
-                                            <option value="LAFO">LAFO</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        CPE Configuration
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Site Address (Location where CPE needs to be configured)</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Billing Method<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
-                                    <div class="input-wrapper">
-                                        <select multiple style="height: auto; min-height: 80px;">
-                                            <option value="MRP">MRP</option>
-                                            <option value="Purchase">Purchase</option>
-                                            <option value="Customer Provided">Customer Provided</option>
-                                            <option value="Direct Lease">Direct Lease</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Preferred Contracting Method</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="" disabled selected>Select Contracting Method</option>
-                                            <option value="Local">Local</option>
-                                            <option value="Central">Central</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Maintenance</label>
-                                    <div class="input-wrapper multi-field">
-                                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="cpe_maint" value="Yes"> Yes</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Installation</label>
-                                    <div class="input-wrapper multi-field">
-                                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="cpe_inst" value="Yes"> Yes</label>
+                            <div class="form-group">
+                                <label>Expiration Date of Vendor Quote</label>
+                                <div class="input-wrapper">
+                                    <div class="input-with-icon">
+                                        <input type="text" placeholder="YYYY-MM-DD">
+                                        <button class="icon-btn">&#128197;</button>
                                     </div>
                                 </div>
                             </div>
@@ -1872,262 +1363,30 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
                 </div>
             </div>
 
-            <div id="tab-address" class="tab-content">
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        TEAM CONTACT INFORMATION
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>BID Manager</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Sales POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Smith, John">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Solution Architect (SA)</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Jones, Mary">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>PCM POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Zunaid Sheikh">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Deal Strategist</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Miller, Sam">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>COE POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Legal POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Set Up Non-Standard Supplier
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>VZ Sourcing Approval</label>
+                                <div class="input-wrapper multi-field">
+                                    <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="modal_vz_sourcing" value="Yes"> Yes</label>
+                                    <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="modal_vz_sourcing" value="No"> No</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        REQUEST INFORMATION
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label># Sites</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label># Countries</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Address List</label>
-                                    <div class="input-wrapper">
-                                        <input type="file" class="required-input" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        REQUEST METRICS
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Request Received Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Acknowledged Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Request Completion Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <div class="input-wrapper">
-                                        <select id="address_status_dropdown" onchange="toggleAddressHoldReason()">
-                                            <option value="" disabled selected>Select Status</option>
-                                            <option value="New">New</option>
-                                            <option value="Under Review">Under Review</option>
-                                            <option value="Pending Assignment">Pending Assignment</option>
-                                            <option value="On Hold">On Hold</option>
-                                            <option value="Working">Working</option>
-                                            <option value="Closed - Complete">Closed - Complete</option>
-                                            <option value="Closed - Incomplete">Closed - Incomplete</option>
-                                            <option value="Rejected">Rejected</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="address_hold_reason_group" style="display: none;">
-                                    <label>Hold Reason</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="" disabled selected>Select Reason</option>
-                                            <option value="With GL">With GL</option>
-                                            <option value="PCM">PCM</option>
-                                            <option value="IT">IT</option>
-                                            <option value="AT">AT</option>
-                                            <option value="Legal">Legal</option>
-                                            <option value="CD Approval">CD Approval</option>
-                                            <option value="SA for design">SA for design</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Case Business Days (Days Since Received)</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Validated By</label>
-                                    <div class="input-wrapper" style="flex-direction: column; gap: 8px;">
-                                        <div id="validator-container" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
-                                            <div class="input-with-icon">
-                                                <input type="text" value="">
-                                                <button class="icon-btn">&#128269;</button>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="btn" style="align-self: flex-start; min-width: 0; padding: 4px 8px; font-size: 11px;" onclick="addValidator()">+ Add Validator</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>RFP Case ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Address Auto Validated</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Manual Validated</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>VISE/Sheet parser ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Invalid Address</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Major Fallout countries</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>CoE Region</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="" disabled selected>Select Region</option>
-                                            <option value="International">International</option>
-                                            <option value="Americas">Americas</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Closure Comments</label>
-                                    <div class="input-wrapper">
-                                        <textarea></textarea>
-                                    </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Bill of Materials / Vendor Quote</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
                         </div>
@@ -2135,288 +1394,308 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
                 </div>
             </div>
 
-            <div id="tab-amendment" class="tab-content">
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        TEAM CONTACT INFORMATION
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>BID Manager</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Sales POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Smith, John">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Solution Architect (SA)</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Jones, Mary">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>PCM POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Zunaid Sheikh">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Custom Discounts
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Vendor Quote</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Deal Strategist</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="Miller, Sam">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>COE POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Legal POC</label>
-                                    <div class="input-wrapper multi-field" style="width: 65%;">
-                                        <div class="input-with-icon" style="flex-grow: 1;">
-                                            <input type="text" value="">
-                                            <button class="icon-btn">&#128269;</button> 
-                                        </div>
-                                        <label style="width: auto; padding: 0; text-align: left;"><input type="checkbox"> Notify</label>
-                                    </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>List of Destination Countries</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        QUOTE HEADER INFO
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Customer Type</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="Existing" selected>Existing</option>
-                                            <option value="New">New</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>CLE with LE ID</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>VLE</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Currency</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="" class="required-input" required>
-                                    </div>
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Custom Rates &amp; Costs
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>PCM Needed</label>
+                                <div class="input-wrapper multi-field">
+                                    <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="modal_crc_pcm" value="Yes"> Yes</label>
+                                    <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="modal_crc_pcm" value="No"> No</label>
                                 </div>
                             </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Pricing Plan</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select an option</option>
-                                            <option value="Transactional">Transactional</option>
-                                            <option value="RTB+Transactional">RTB+Transactional</option>
-                                        </select>
-                                    </div>
+                            <div class="form-group">
+                                <label>Vendor Quote</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
-                                <div class="form-group">
-                                    <label>Contract Term - Quote</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                            <option value="60">60</option>
-                                            <option value="72">72</option>
-                                        </select>
-                                    </div>
+                            </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Does the customer solution include MRP Aggregator as part of the solution?</label>
+                                <div class="input-wrapper multi-field">
+                                    <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="modal_crc_mrp" value="Yes"> Yes</label>
+                                    <label style="width: auto; padding: 6px 0 0 0; text-align: left;"><input type="checkbox" name="modal_crc_mrp" value="No"> No</label>
                                 </div>
-                                <div class="form-group">
-                                    <label>Contract Term - Access</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Contract Term - CPE</label>
-                                    <div class="input-wrapper">
-                                        <select class="required-input" required>
-                                            <option value="" disabled selected>Select months</option>
-                                            <option value="12">12</option>
-                                            <option value="24">24</option>
-                                            <option value="36">36</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label>List of Destination Countries</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="collapsible-section">
-                    <button type="button" class="collapsible-header" onclick="toggleSection(this)">
-                        SCOPE OVERVIEW
-                        <span class="toggle-icon">&#9660;</span>
-                    </button>
-                    <div class="collapsible-content">
-                        <div class="form-columns">
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Amendment type</label>
-                                    <div class="input-wrapper">
-                                        <select>
-                                            <option value="" disabled selected>Choose Amendment Type</option>
-                                            <option value="Update Pricebook">Update Pricebook</option>
-                                            <option value="Product Amendment">Product Amendment</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Site List Attachment</label>
-                                    <div class="input-wrapper">
-                                        <input type="file" class="required-input" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Product to be Added<br><span style="font-size: 10px; font-weight: normal; color: #777;">(Select One or More Options)</span></label>
-                                    <div class="input-wrapper">
-                                        <select multiple style="height: auto; min-height: 80px;">
-                                            <option value="Product 1">Product 1</option>
-                                            <option value="Product 2">Product 2</option>
-                                            <option value="Product 3">Product 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Request Details</label>
-                                    <div class="input-wrapper">
-                                        <textarea></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Due Date</label>
-                                    <div class="input-wrapper">
-                                        <div class="input-with-icon">
-                                            <input type="text" placeholder="YYYY-MM-DD">
-                                            <button class="icon-btn">&#128197;</button>
-                                        </div>
-                                    </div>
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Non-Standard MRP
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column" style="gap: 15px; padding-top: 5px;">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Standalone CPE MRP (No Mgmnt, No maintenance, no labor)
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Managed CPE without Maintenance
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Managed CPE with Maintenance, no labor (TPV INSTALL)
+                            </label>
+                        </div>
+                        
+                        <div class="column" style="gap: 15px; padding-top: 5px;">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Managed CPE with Maintenance, no labor (Customer Self INSTALL)
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Vendor Maintenance
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Aggregator Workbook
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Quoting Support
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column" style="gap: 15px; padding-top: 5px;">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help With PQ quote CPE Specific Error Message
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help With CPE Template ID error
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with PQ ID
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with CLE/VLE
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with Error Message
+                            </label>
+                        </div>
+                        
+                        <div class="column" style="gap: 15px; padding-top: 5px;">
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with Affected Site error on CPE
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with Affected Service ID error on CPE
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with CPE Template ID
+                            </label>
+                            <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" style="margin-top: 2px;"> Help with Vendor Quote
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> CPE Template Build
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Bill of Materials (BOM)</label>
+                                <div class="input-wrapper multi-field">
+                                    <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                                 </div>
                             </div>
-                            <div class="column">
-                                <div class="form-group">
-                                    <label>Contracting Required</label>
-                                    <div class="input-wrapper multi-field">
-                                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;"><input type="checkbox" name="amend_contracting" value="Yes"> Yes</label>
-                                    </div>
+                            
+                            <div class="form-group">
+                                <label>If Managed - MNS Information</label>
+                                <div class="input-wrapper" style="flex-direction: column; gap: 8px; padding-top: 6px;">
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> MWAN Full
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> MWAN Physical
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> MWAN Monitor &amp; Notify
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> MLAN
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> MWLAN
+                                    </label>
                                 </div>
-                                <div class="form-group">
-                                    <label># Sites</label>
-                                    <div class="input-wrapper">
-                                        <input type="text" value="">
-                                    </div>
+                            </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Exempt Maintenance or Labor if applicable</label>
+                                <div class="input-wrapper" style="flex-direction: column; gap: 8px; padding-top: 6px;">
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Exempt Maintenance
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Exempt Labor
+                                    </label>
                                 </div>
-                                <div class="form-group">
-                                    <label>Orders Required?</label>
-                                    <div class="input-wrapper multi-field">
-                                        <label style="width: auto; padding: 6px 15px 0 0; text-align: left;">
-                                            <input type="checkbox" id="orders_required_checkbox" onchange="toggleOrdersFields()"> Yes
-                                        </label>
-                                    </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Type of Sale</label>
+                                <div class="input-wrapper" style="flex-direction: column; gap: 8px; padding-top: 6px;">
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Purchase
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Monthly Recurring Plan (MRP)
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Customer Provided CPE
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Customer Furnished CPE
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Direct Lease
+                                    </label>
                                 </div>
-                                <div id="amendment_orders_fields" style="display: none; flex-direction: column; gap: 12px; width: 100%;">
-                                    <div class="form-group">
-                                        <label>BAN information</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>LCON</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>DMARC</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Existing services (if any)</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Use of Access</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" value="">
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> Validate CPE Availability
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-columns">
+                        <div class="column">
+                            <div class="form-group">
+                                <label>ProQuest Quote ID</label>
+                                <div class="input-wrapper">
+                                    <input type="text">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label>CLE/VLE combination and Destination Country</label>
+                                <div class="input-wrapper">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Manufacturer/OEM</label>
+                                <div class="input-wrapper">
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="form-group">
+                                <label>Billing Method</label>
+                                <div class="input-wrapper" style="flex-direction: column; gap: 8px; padding-top: 6px;">
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Purchase
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Monthly Recurring Plan (MRP)
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Customer Provided CPE
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Customer Furnished CPE
+                                    </label>
+                                    <label style="width: auto; padding: 0; text-align: left; display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Direct Lease
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section" style="margin-top: 10px;">
+                <button type="button" class="collapsible-header collapsed" onclick="toggleSection(this)">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" onclick="event.stopPropagation();"> CPE Counseling/ Guidance /Strategy
+                    </span>
+                    <span class="toggle-icon">&#9660;</span>
+                </button>
+                <div class="collapsible-content" style="display: none;">
+                    <div class="form-group" style="align-items: flex-start;">
+                        <label style="width: 35%;">Please provide a detailed description of how we can assist you.</label>
+                        <div class="input-wrapper" style="flex-direction: column; gap: 10px;">
+                            <textarea class="textarea-large" style="width: 100%;"></textarea>
+                            <div>
+                                <button type="button" class="btn" style="padding: 4px 12px; font-size: 12px;">Please Attach</button>
                             </div>
                         </div>
                     </div>
@@ -2426,17 +1705,18 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         </div>
         <div class="modal-footer">
             <button class="btn" onclick="closeRequestInfoModal()">Cancel</button>
-            <button class="btn" onclick="closeRequestInfoModal()">Submit Request</button>
+            <button class="btn">Submit</button>
         </div>
     </div>
 </div>
 
-<div id="chatWindow" class="chat-window">
+<div class="chat-window" id="chatWindow">
     <div class="chat-header">
         <div class="chat-header-left">
-            <span>Message</span>
+            <span>Messaging</span>
             <div class="chat-options">
-              <label><input type="checkbox" checked> Polaris</label>
+              
+                <label><input type="checkbox" checked> Polaris</label>
                 <label><input type="checkbox"> MSD</label>
                 <label><input type="checkbox"> Email</label>
             </div>
@@ -2444,7 +1724,7 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
         <span class="close-chat" onclick="toggleChat()">&#10005;</span>
     </div>
     <div class="chat-body">
-        <p class="chat-message-system">Chat started</p>
+        <p class="chat-message-system">Start of conversation...</p>
     </div>
     <div class="chat-footer">
         <input type="text" placeholder="Type a message...">
@@ -2453,9 +1733,105 @@ It also mentions "Cisco managed routers (MWAN) on MPLS network" which suggests a
 </div>
 
 <div id="alicePopup" class="alice-popup-container">
-    <button class="alice-close-btn" onclick="toggleAlicePopup()">&#10005;</button>
-    <img src="Screenshot 2026-02-23 074352.png" alt="ALICE Voice">
+    <button class="alice-close-btn" onclick="toggleAlicePopup()" title="Close ALICE"></button>
+    <img src="Screenshot 2026-02-23 074352.png" alt="ALICE-Voice-v3 Interface">
 </div>
+
+<script>
+    function toggleSection(button) {
+        button.classList.toggle("collapsed");
+        var content = button.nextElementSibling;
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
+
+    function closeAllPopups() {
+        var chatWindow = document.getElementById("chatWindow");
+        if(chatWindow) chatWindow.style.display = "none";
+        
+        var alicePopup = document.getElementById("alicePopup");
+        if(alicePopup) alicePopup.style.display = "none";
+        
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].style.display = "none";
+        }
+    }
+
+    function toggleChat() {
+        var chatWindow = document.getElementById("chatWindow");
+        var isHidden = (chatWindow.style.display === "none" || chatWindow.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            chatWindow.style.display = "flex";
+        }
+    }
+
+    function toggleAlicePopup() {
+        var popup = document.getElementById("alicePopup");
+        var isHidden = (popup.style.display === "none" || popup.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            popup.style.display = "block";
+        }
+    }
+
+    function toggleEngageMenu(menuId, event) {
+        event.stopPropagation();
+        var menu = document.getElementById(menuId);
+        var isHidden = (menu.style.display === "none" || menu.style.display === "");
+        closeAllPopups();
+        if (isHidden) {
+            menu.style.display = "block";
+        }
+    }
+
+    function toggleSubMenu(checkbox) {
+        var subMenu = checkbox.parentElement.nextElementSibling;
+        if (subMenu && subMenu.classList.contains('sub-options')) {
+            if (checkbox.checked) {
+                subMenu.style.display = "block";
+            } else {
+                subMenu.style.display = "none";
+                // Uncheck all sub-options when hiding
+                var subCheckboxes = subMenu.querySelectorAll('input[type="checkbox"]');
+                subCheckboxes.forEach(function(cb) { cb.checked = false; });
+            }
+        }
+    }
+
+    // New Functions for Request Info Modal
+    function openRequestInfoModal() {
+        closeAllPopups();
+        
+        // Transfer values from main form to modal
+        document.getElementById('modal_opp_id').value = document.getElementById('main_opp_id').value;
+        document.getElementById('modal_cust_name').value = document.getElementById('main_cust_name').value;
+        document.getElementById('modal_acc_mgr').value = document.getElementById('main_acc_mgr').value;
+        document.getElementById('modal_sa').value = document.getElementById('main_sa').value;
+        document.getElementById('modal_req_by').value = document.getElementById('main_req_by').value;
+
+        // Show Modal
+        document.getElementById('requestInfoModal').style.display = 'flex';
+    }
+
+    function closeRequestInfoModal() {
+        document.getElementById('requestInfoModal').style.display = 'none';
+    }
+
+    // Close dropdowns if the user clicks anywhere outside the menu or engage button
+    window.onclick = function(event) {
+        if (!event.target.matches('.btn-engage') && !event.target.closest('.dropdown-content')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                dropdowns[i].style.display = "none";
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
